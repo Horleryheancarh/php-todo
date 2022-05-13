@@ -25,12 +25,18 @@ pipeline {
              	sh 'php artisan key:generate'
       		}
     	}
-	
-		stage('Code Analysis') {
-			steps {
-        		sh 'phploc app/ --log-csv build/logs/phploc.csv'
-			}
+
+		stage('Execute Unit Tests') {
+      		steps {
+             	sh './vendor/bin/phpunit'
+      		}
 		}
-		
+
+		// stage('Code Analysis') {
+		// 	steps {
+        // 		sh 'phploc app/ --log-csv build/logs/phploc.csv'
+		// 	}
+		// }
+
   	}
 }
