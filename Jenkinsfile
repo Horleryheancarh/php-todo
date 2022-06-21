@@ -18,15 +18,15 @@ pipeline {
 
 		stage ('Build Docker Image') {
 			steps {
-				sh 'docker build -t yheancarh/php_todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER} ./php-todo/'
+				sh 'docker build -t yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER} ./php-todo/'
 			}
 		}
 
 		stage ('Push Image To Docker Hub') {
 			steps {
-				sh 'docker login -u ${env.username} -p ${env.password}'
+				sh 'docker login -u ${username} -p ${password}'
 
-				sh 'docker push yheancarh/php_todo:${env.BRANCH_NAME}-${env.BUILD_NUMBER}'
+				sh 'docker push yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER}'
 
 				sh 'docker logout'
 			}
