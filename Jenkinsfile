@@ -10,7 +10,7 @@ pipeline {
 			}
 		}
 
-    	stage('Checkout SCM') {
+    	stage('Clone Github Repo') {
       		steps {
             	git branch: 'main', url: 'https://github.com/Horleryheancarh/php-todo.git'
       		}
@@ -18,6 +18,8 @@ pipeline {
 
 		stage ('Build Docker Image') {
 			steps {
+				sh 'ls -al'
+				
 				sh 'docker build -t yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER} ./php-todo/'
 			}
 		}
