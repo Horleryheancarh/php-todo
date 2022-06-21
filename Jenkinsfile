@@ -24,17 +24,16 @@ pipeline {
 
 		stage ('Push Image To Docker Hub') {
 			steps {
-				sh 'docker login -u ${username} -p ${password}'
 				sh 'docker push yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER}'
-				sh 'docker logout'
 			}
 		}
 
-		// stage ('Clean the Workspace') {
-		// 	steps {
-		// 		sh 
-		// 	}
-		// }
+		stage('Cleanup') {
+			steps {
+				cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
 
+				sh 'docker system prune -f'
+			}
+		}
   	}
 }
