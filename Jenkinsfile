@@ -18,13 +18,17 @@ pipeline {
 
 		stage ('Build Docker Image') {
 			steps {
-				sh 'docker build -t yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER} .'
+				script {
+					sh 'docker build -t yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER} .'
+				}
 			}
 		}
 
 		stage ('Push Image To Docker Hub') {
 			steps {
-				sh 'docker push yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER}'
+				script {
+					sh 'docker push yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER}'
+				}
 			}
 		}
 
