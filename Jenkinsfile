@@ -41,13 +41,11 @@ pipeline {
 		stage('Cleanup') {
 			steps {
 				cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
+				
+				sh 'docker log'
+
+				sh 'docker system prune -f'
 			}
 		}
   	}
-
-	post {
-		sh 'docker logout'
-
-		sh 'docker system prune -f'
-	}
 }
