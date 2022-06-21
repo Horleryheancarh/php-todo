@@ -42,7 +42,7 @@ pipeline {
 			steps {
 				cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
 				
-				sh 'docker log'
+				sh 'docker logout'
 
 				sh 'docker system prune -f'
 			}
