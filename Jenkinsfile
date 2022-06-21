@@ -1,5 +1,9 @@
 pipeline {
     agent any
+
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
 	
 	stages {
 		stage("Initial cleanup") {
@@ -27,6 +31,8 @@ pipeline {
 		stage ('Push Image To Docker Hub') {
 			steps {
 				script {
+					sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+
 					sh 'docker push yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER}'
 				}
 			}
@@ -35,9 +41,13 @@ pipeline {
 		stage('Cleanup') {
 			steps {
 				cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
-
-				sh 'docker system prune -f'
 			}
 		}
   	}
+
+	post {
+		sh 'docker logout'
+
+		sh 'docker system prune -f'
+	}
 }
