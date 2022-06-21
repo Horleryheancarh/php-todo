@@ -24,7 +24,7 @@ pipeline {
 
 		stage ('Push Image To Docker Hub') {
 			steps {
-				sh 'docker push yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER}'
+				sh 'docker push -t yheancarh/php_todo:${BRANCH_NAME}-${BUILD_NUMBER}'
 			}
 		}
 
